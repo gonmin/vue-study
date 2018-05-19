@@ -9,20 +9,42 @@
 </template>
 
 <script>
+/* eslint-disable */ 
+function getScrollHeight(){
+　　var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0
+　　if(document.body){
+　　　　bodyScrollHeight = document.body.scrollHeight
+　　}
+　　if(document.documentElement){
+　　　　documentScrollHeight = document.documentElement.scrollHeight
+　　}
+　　scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight
+　　return scrollHeight
+}
 export default {
   name: 'App',
   mounted () {
+    console.log([1, 2, 'fanfan'].find(item => item === 'fanfan'))
     this.watchScroll()
+    this.addImgsReturnFalse()
   },
   methods: {
     watchScroll () {
       const that = this
       window.onscroll = function (e) {
-        console.log(document.documentElement.clientHeight + e.currentTarget.scrollY, that.$refs.bottomLine.offsetTop)
+        console.log(getScrollHeight(), that.$refs.bottomLine.offsetTop)
+        // console.log(document.documentElement.clientHeight + e.currentTarget.scrollY, that.$refs.bottomLine.offsetTop)
         if (document.documentElement.clientHeight + e.currentTarget.scrollY > that.$refs.bottomLine.offsetTop) {
           console.log('滚动到底了')
         }
       }
+    },
+    addImgsReturnFalse () {
+      const imgs = document.querySelectorAll('img');
+      // const arrayImgs = Array.prototype.slice.call(imgs, 0)
+      imgs.forEach(item => {
+        item.setAttribute('onclick', 'return false;')
+      })
     }
   }
 }
