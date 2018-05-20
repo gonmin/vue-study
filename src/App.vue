@@ -24,7 +24,6 @@ function getScrollHeight(){
 export default {
   name: 'App',
   mounted () {
-    console.log([1, 2, 'fanfan'].find(item => item === 'fanfan'))
     this.watchScroll()
     this.addImgsReturnFalse()
   },
@@ -32,17 +31,17 @@ export default {
     watchScroll () {
       const that = this
       window.onscroll = function (e) {
-        console.log(getScrollHeight(), that.$refs.bottomLine.offsetTop)
-        // console.log(document.documentElement.clientHeight + e.currentTarget.scrollY, that.$refs.bottomLine.offsetTop)
-        if (document.documentElement.clientHeight + e.currentTarget.scrollY > that.$refs.bottomLine.offsetTop) {
+        console.log(window.innerHeight, document.documentElement.clientHeight)
+        console.log((window.innerHeight || document.documentElement.clientHeight) + e.currentTarget.scrollY, that.$refs.bottomLine.offsetTop)
+        if ((window.innerHeight || document.documentElement.clientHeight) + e.currentTarget.scrollY > that.$refs.bottomLine.offsetTop) {
           console.log('滚动到底了')
         }
       }
     },
     addImgsReturnFalse () {
       const imgs = document.querySelectorAll('img');
-      // const arrayImgs = Array.prototype.slice.call(imgs, 0)
-      imgs.forEach(item => {
+      const arrayImgs = Array.prototype.slice.call(imgs, 0)
+      arrayImgs.forEach(item => {
         item.setAttribute('onclick', 'return false;')
       })
     }
